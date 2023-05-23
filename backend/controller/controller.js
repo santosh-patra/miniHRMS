@@ -160,13 +160,16 @@ export const getByPageController = async (req, res) => {
         const { page } = req.params;
         let limit = 2;
 
-        const startIndex = (page-1)*limit;
-        const lastIndex = page*limit;
+        let startIndex = (page-1)*limit;
+        let lastIndex = page*limit;
 
         let employees = await Employee.find();
         console.log("employees--->",employees);
         console.log("StartIndex--->",startIndex);
         console.log("LastIndex--->",lastIndex);
+        if(lastIndex>employees.length){
+            lastIndex = employees.length
+        }
         let newArr = []
         for(let i=startIndex;i<lastIndex;i++){
             newArr.push(employees[i]);
